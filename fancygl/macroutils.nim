@@ -68,13 +68,6 @@ proc addAll*(dst: NimNode; src: openarray[NimNode]): NimNode {.discardable.} =
 proc isIdentChar(c: char): bool =
   'A' <= c and c <= 'Z' or 'a' <= c and c <= 'z' or '0' <= c and c <= '9' or c == '_'
 
-proc expectIdent*(n: NimNode, name: string) {.compileTime.} =
-  ## checks that `n` is an identifier with name `name`. If this is not the case,
-  ## compilation aborts with an error message. This is useful for writing
-  ## macros that check the AST that is passed to them.
-  n.expectKind(nnkIdent)
-  if not n.eqIdent(name): error("Expected a node with identifier " & name & ", got " & $n, n)
-
 template myAdd(a: var string, b: untyped): untyped =
   ## simply tries to minimize temporary strings
   when b is SomeSignedInt:
